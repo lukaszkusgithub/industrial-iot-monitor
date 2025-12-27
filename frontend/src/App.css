@@ -1,0 +1,115 @@
+body {
+	background-color: #1a1a2e;
+	color: #e0e0e0;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	min-height: 100vh;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.dashboard-container {
+	width: 90%;
+	max-width: 1000px;
+	text-align: center;
+}
+
+h1 {
+	margin-bottom: 2rem;
+	color: #fff;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+
+.content-wrapper {
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.machine-card,
+.chart-card {
+	background-color: #16213e;
+	border: 1px solid #0f3460;
+	border-radius: 15px;
+	padding: 2rem;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+	flex: 1;
+	min-width: 300px;
+}
+
+.card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+	border-bottom: 1px solid #0f3460;
+	padding-bottom: 1rem;
+}
+
+.status-badge {
+	padding: 0.5rem 1rem;
+	border-radius: 20px;
+	font-weight: bold;
+	font-size: 0.9rem;
+}
+.status-badge.green {
+	background-color: rgba(0, 255, 136, 0.2);
+	color: #00ff88;
+}
+.status-badge.red {
+	background-color: rgba(255, 68, 68, 0.2);
+	color: #ff4444;
+}
+
+.metrics-grid {
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 2rem;
+}
+
+.value {
+	font-size: 2.5rem;
+	font-weight: bold;
+	margin: 0.5rem 0;
+}
+
+.control-panel {
+	display: flex;
+	gap: 1rem;
+	justify-content: center;
+	border-top: 1px solid #0f3460;
+	padding-top: 1.5rem;
+}
+
+button {
+	padding: 10px 30px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 1rem;
+	transition: transform 0.1s;
+}
+button:active {
+	transform: scale(0.95);
+}
+
+.btn-start {
+	background-color: #00ff88;
+	color: #000;
+}
+.btn-stop {
+	background-color: #ff4444;
+	color: #fff;
+}
+
+.error-box {
+	background-color: rgba(255, 68, 68, 0.8);
+	color: white;
+	padding: 1rem;
+	margin-bottom: 1rem;
+	border-radius: 8px;
+}

@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # 1. BROKER MQTT
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: factory_broker
+    ports:
+      - "1883:1883" # Machine
+      - "9001:9001" # Web
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+
+  # 2. DATABASE
+  influxdb:
+    image: influxdb:2.7
+    container_name: factory_db
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./influxdb_data:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password123
+      - DOCKER_INFLUXDB_INIT_ORG=myfactory
+      - DOCKER_INFLUXDB_INIT_BUCKET=sensors
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUX_TOKEN}
+
+  # 3. SIMULATOR
+  simulator:
+    build: ./machine_simulator  # 
+    container_name: factory_simulator
+    depends_on:
+      - mosquitto  
+    restart: always 
+    environment:
+      - MQTT_BROKER=${MQTT_BROKER}
+      - MQTT_PORT=${MQTT_PORT}
+      - MQTT_TOPIC=${MQTT_TOPIC}
+
+  # 4. DATA COLLECTOR
+  collector:
+    build: ./data_collector
+    container_name: factory_collector
+    depends_on:
+      - mosquitto
+      - influxdb
+    restart: always
+    environment:
+      - INFLUX_TOKEN=${INFLUX_TOKEN}
+      - INFLUX_ORG=${INFLUX_ORG}
+      - INFLUX_BUCKET=${INFLUX_BUCKET}
+      - INFLUX_URL=${INFLUX_URL}
+      - MQTT_BROKER=${MQTT_BROKER}
+      - MQTT_TOPIC=${MQTT_TOPIC}
+
+
+  # 5. BACKEND API
+  backend:
+    build: ./backend_api
+    container_name: factory_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - influxdb
+    restart: always
+    environment:
+      - INFLUX_TOKEN=${INFLUX_TOKEN}
+      - INFLUX_ORG=${INFLUX_ORG}
+      - INFLUX_BUCKET=${INFLUX_BUCKET}
+      - INFLUX_URL=${INFLUX_URL}
