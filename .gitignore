@@ -1,0 +1,39 @@
+# --- Python ---
+# Virtual Environments
+venv/
+env/
+.env
+
+#  Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / Libraries
+build/
+dist/
+*.egg-info/
+
+# --- Docker & Local Data ---
+
+mosquitto/data/*
+mosquitto/log/*
+
+!mosquitto/data/.gitkeep
+!mosquitto/log/.gitkeep
+
+influxdb-data/
+
+# --- IDE ---
+.vscode/
+.idea/
+
+# --- Node.js / React ---
+node_modules/
+npm-debug.log
+yarn-error.log
+build/
+
+# --- System ---
+.DS_Store
+Thumbs.db
