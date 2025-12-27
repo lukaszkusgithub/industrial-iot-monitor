@@ -22,7 +22,7 @@ mosquitto/log/*
 !mosquitto/data/.gitkeep
 !mosquitto/log/.gitkeep
 
-influxdb-data/
+influxdb_data/
 
 # --- IDE ---
 .vscode/
