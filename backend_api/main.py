@@ -24,11 +24,9 @@ app = FastAPI(
 )
 
 # CORS Policy (Cross-Origin Resource Sharing)
-# This allows our React frontend (running on a different port) to access this API.
-# In a real production environment, you should specify exact origins instead of ["*"].
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins (for development only)
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -75,7 +73,7 @@ def send_mqtt_command(command: str):
         raise HTTPException(status_code=500, detail=f"MQTT Error: {e}")
 
 
-# Model danych (co API oczekuje od Reacta)
+# --- DATA MODELS ---
 class CommandRequest(BaseModel):
     command: str
 
@@ -131,8 +129,6 @@ def get_latest_metric(machine_id: str):
 
 
 # --- API ENDPOINTS ---
-
-
 @app.get("/")
 def read_root():
     return {"message": "Smart Factory API is running"}
